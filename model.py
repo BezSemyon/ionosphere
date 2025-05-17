@@ -23,6 +23,20 @@ def check_eq(prj,y,m,d, Mw=5.0):
                 except: pass
     return False
 
+def get_dst_values(dst_file, year, month, day):
+    target = "DST" + year[-2:] + month + "*" + day
+    with open(dst_file, "r") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            tokens = line.strip().split()
+            if tokens[0] == target:
+                try:
+                    return list(map(float, tokens[3:27]))
+                except:
+                    return None
+    return None
+
 def load_vista(path):
     with h5py.File(path,'r') as f:
         V = f['data']['VISTA'][:]
@@ -124,8 +138,8 @@ class MetricsCB(tf.keras.callbacks.Callback):
 def main():
 
     base   = os.path.dirname(os.path.abspath(__file__))
-    prj    = os.path.join(base,"prj.txt")
-
+    eqke_cases    = os.path.join(base,"eqke_cases.txt")
+    dst_file = os.path.join(base, "dst_values.txt")
     raws=[]
     for yr in [2005,2006]:
         for m in range(1,13):
@@ -134,7 +148,10 @@ def main():
             for fn in sorted(os.listdir(fold)):
                 if not fn.startswith("VISTA_"): continue
                 y,mo,d=parse_vista_date(fn)
-                if check_eq(prj,y,mo,d): continue
+                if check_eq(eqke_cases,y,mo,d): continue
+                dst = get_dst_values(dst_file, y, mo, d)
+                if dst is not None and min(dst)<=-100:
+                    continue
                 try: raws.append(load_vista(os.path.join(fold,fn)))
                 except: pass
 
