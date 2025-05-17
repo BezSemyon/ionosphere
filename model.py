@@ -140,7 +140,6 @@ def main():
 
     data=np.concatenate(raws).astype('float32')
     data=np.nan_to_num(data)
-    data=(data-data.min())/(data.max()-data.min()+1e-8)
 
     X,Y=seq(data,24,1); idx=int(0.8*len(X))
     Xtr,Xv,Ytr,Yv = X[:idx],X[idx:],Y[:idx],Y[idx:]
