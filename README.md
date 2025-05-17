@@ -45,4 +45,4 @@ To make a forecast:
 2. Load model with:
    ```python
    from tensorflow.keras.models import load_model
-   model = load_model("conv_lstm_1405.h5", compile=False)
+   model = load_model("conv_lstm.h5", compile=False)
