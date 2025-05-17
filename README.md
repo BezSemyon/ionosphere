@@ -13,18 +13,15 @@ This project implements a ConvLSTM-based deep learning model for forecasting Tot
 
 ## 🧠 Model
 - **Architecture:** ConvLSTM Autoencoder with skip connections
-- **Input shape:** (24, 21, 24, 1)
-- **Output shape:** (1, 21, 24, 1)
 - **Loss:** Huber loss
 - **Metrics:** MSE, MAE, R²
 
 ---
 
 ## 🛠 Training
-- Earthquake days (Mw ≥ 5.0) are filtered out using `prj.txt`
-- Data is normalized to [0, 1] and missing values (`NaN`, `Inf`) are replaced
+- Earthquake days (Mw ≥ 5.0) and days with severe ionosperic storm caused by solar activity (<=-100 T) are filtered out using `prj.txt`
 - Training/validation split: 80% / 20%
-- Training is done for 60 epochs using ReduceLROnPlateau and custom metrics callback
+- Training uses ReduceLROnPlateau and custom metrics callback
 
 ---
 
@@ -45,4 +42,4 @@ To make a forecast:
 2. Load model with:
    ```python
    from tensorflow.keras.models import load_model
-   model = load_model("conv_lstm.h5", compile=False)
+   model = load_model("conv_lstm.h5")
