@@ -6,7 +6,7 @@ This project implements a ConvLSTM-based deep learning model for forecasting Tot
 
 ## 📍 Region & Data
 - **Region:** Japan (cropped TEC grid: 21×24)
-- **Data source:** VISTA TEC maps in HDF5 format
+- **Data source:** VISTA TEC maps in HDF5 format https://deepblue.lib.umich.edu/data/concern/data_sets/nc580n00z?locale=en
 - **Time window:** Sequences of 24 past timesteps (2 hours) are used to predict 1 timestep ahead.
 
 ---
